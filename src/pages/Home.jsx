@@ -83,10 +83,10 @@ export default function Home() {
 
               <div className="mt-5 flex gap-3">
                 <Btn href="#mapa" variant="primary" className="text-sm md:text-base">
-                  Ver pontos no mapa
+                  Ver mapa
                 </Btn>
                 <Btn href="#servicos" variant="secondary" className="text-sm md:text-base">
-                  Como vamos te ajudar
+                  Nossos Serviços
                 </Btn>
               </div>
             </div>
