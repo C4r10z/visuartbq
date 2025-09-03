@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Visuart v2</title>
+    <script
+      type="module"
+      src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.6.2/dist/dotlottie-wc.js"
+    ></script>
+    
+    <style>
+      /* garante que o player ocupe o tamanho desejado quando usado sem inline style */
+      dotlottie-wc.lottie-hero {
+        display: block;
+        width: 100%;
+        height: clamp(300px, 55vh, 520px); /* responsivo */
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

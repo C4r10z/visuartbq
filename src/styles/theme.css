@@ -1,0 +1,226 @@
+:root{
+  --vz-bg: #ffffff;
+  --vz-text: #0f172a;
+  --vz-muted: #64748b;
+  --vz-primary: #d72638;       /* carmim */
+  --vz-primary-600:#b71d2b;
+  --vz-accent: #ffb703;        /* âmbar quente */
+
+  --vz-card: #ffffff;
+  --vz-border: #e9eef5;
+
+  --vz-glow-red: 0 14px 32px rgba(215,38,56,.34);
+  --vz-glow-yellow: 0 12px 28px rgba(255,183,3,.34);
+
+  --header-h: 64px;
+  --header-h-compact: 52px;
+}
+
+/* ===== Base ===== */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Dots + Blobs utilitárias */
+.vz-dots {
+  position: relative; width: 120px; height: 120px;
+  background-image: radial-gradient(var(--vz-accent) 2.6px, transparent 2.6px);
+  background-size: 12px 12px; opacity: .85;
+}
+.vz-blob { position: absolute; border-radius: 999px; filter: blur(18px); opacity: .7; pointer-events: none; }
+
+/* Hover */
+.hover-boost { transition: transform .18s ease, box-shadow .18s ease, filter .18s ease; will-change: transform, box-shadow, filter; }
+.hover-boost:hover { transform: translateY(-2px); filter: saturate(1.06); }
+.hover-boost-red:hover { box-shadow: var(--vz-glow-red); }
+.hover-boost-yellow:hover { box-shadow: var(--vz-glow-yellow); }
+
+/* Reveal */
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity .45s ease, transform .45s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* ===== Header ===== */
+.site-header { will-change: transform; }
+
+.header-shell {
+  height: var(--header-h);
+  transition: height .18s ease, box-shadow .18s ease, background-color .18s ease;
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.04);
+}
+.header-shell.compact {
+  height: var(--header-h-compact);
+  box-shadow: 0 12px 22px rgba(15, 23, 42, 0.08);
+}
+
+.logo-shrink { transition: transform .2s ease; }
+.header-shell.compact .logo-shrink { transform: scale(.92); }
+
+/* Pills desktop */
+.nav-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .55rem .9rem;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.94rem;
+  border: 1px solid rgba(0,0,0,.06);
+  background: linear-gradient(180deg, rgba(248,250,252,.55), rgba(248,250,252,.28));
+  color: #111827;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.nav-pill:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(17,24,39,.08);
+  background: linear-gradient(180deg, rgba(255,255,255,.75), rgba(248,250,252,.45));
+}
+
+/* CTA desktop (âmbar, igual aos CTAs do site) */
+.btn-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: .6rem 1rem;
+  border-radius: 14px;
+  font-weight: 900;
+  border: 1px solid rgba(255,195,0,.9);
+  background: linear-gradient(180deg, rgba(255,195,0,.55), rgba(255,195,0,.32));
+  color: #1f2937;
+  box-shadow: 0 8px 22px rgba(255,183,3,.18);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.btn-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(255,183,3,.28);
+}
+
+/* ===== Mobile menu ===== */
+@keyframes mobileDrop {
+  from { opacity: 0; transform: translateY(-8px) scaleY(.98); }
+  to   { opacity: 1; transform: translateY(0) scaleY(1); }
+}
+.animate-mobileDrop { animation: mobileDrop .26s cubic-bezier(.2,.8,.2,1); }
+
+.mobile-item {
+  display: block;
+  padding: .8rem .25rem;
+  margin: 0 .25rem;
+  font-weight: 700;
+  border-radius: 10px;
+  color: #111827;
+  transition: background .15s ease, transform .15s ease, box-shadow .15s ease;
+}
+.mobile-item:hover {
+  background: rgba(17,24,39,.05);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(17,24,39,.06);
+}
+
+/* Botões da gaveta mobile */
+.mobile-ghost-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: .8rem 1rem;
+  border-radius: 12px;
+  font-weight: 800;
+  border: 1px solid rgba(0,0,0,.06);
+  background: linear-gradient(180deg, rgba(248,250,252,.55), rgba(248,250,252,.28));
+  color: #111827;
+  box-shadow: 0 8px 18px rgba(17,24,39,.06);
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.mobile-ghost-btn:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(180deg, rgba(255,255,255,.75), rgba(248,250,252,.45));
+  box-shadow: 0 12px 24px rgba(17,24,39,.1);
+}
+.mobile-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: .8rem 1rem;
+  border-radius: 12px;
+  font-weight: 900;
+  border: 1px solid rgba(255,195,0,.9);
+  background: linear-gradient(180deg, rgba(255,195,0,.55), rgba(255,195,0,.32));
+  color: #1f2937;
+  box-shadow: 0 10px 22px rgba(255,183,3,.22);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.mobile-cta-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 28px rgba(255,183,3,.3);
+}
+
+/* ===== Compact: encolher botões do header no desktop ===== */
+.header-shell.compact .nav-pill {
+  padding: .38rem .68rem;      /* antes .55 .9 */
+  font-size: .88rem;           /* antes .94rem */
+  border-radius: 10px;         /* antes 12px */
+  transition: padding .18s ease, font-size .18s ease, border-radius .18s ease;
+}
+.header-shell.compact .btn-cta {
+  padding: .48rem .8rem;       /* antes .6 1.0 */
+  font-size: .92rem;
+  border-radius: 12px;         /* antes 14px */
+  box-shadow: 0 6px 16px rgba(255,183,3,.18);
+  transition: padding .18s ease, font-size .18s ease, border-radius .18s ease, box-shadow .18s ease;
+}
+.header-shell.compact nav { gap: .5rem; }
+
+/* ===== Mobile: encolhimento e hambúrguer menor no compact ===== */
+@media (max-width: 639.98px) {
+  .header-shell { height: var(--header-h); }
+  .header-shell.compact { height: var(--header-h-compact); }
+
+  .header-shell.compact .logo-shrink { transform: scale(.88); }
+
+  .header-shell .hamb { width: 40px; height: 40px; border-radius: 12px; transition: all .18s ease; }
+  .header-shell.compact .hamb { width: 36px; height: 36px; border-radius: 10px; }
+}
+/* ===== Forçar tema claro em tudo ===== */
+:root, html {
+  color-scheme: light;            /* força controles/scrollbars claros */
+  background: var(--vz-bg);
+  color: var(--vz-text);
+}
+
+/* Se o SO estiver em dark, ainda assim mantemos claro */
+@media (prefers-color-scheme: dark) {
+  :root, html, body {
+    color-scheme: light;
+    background: var(--vz-bg);
+    color: var(--vz-text);
+  }
+}
+
+/* ===== Bloquear scroll horizontal ===== */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;             /* trava scroll lateral */
+}
+
+/* Mídias nunca estouram o layout */
+img, svg, video, canvas, iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Clipa qualquer “vazamento” horizontal em seções grandes */
+section, header, footer {
+  overflow-x: clip;               /* moderno, evita criar barra de rolagem */
+}
+
+/* Utilitário: aplique quando tiver elementos com offset negativo (ex.: blobs) */
+.clip-x { overflow-x: clip; }
+
+

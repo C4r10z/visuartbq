@@ -1,0 +1,32 @@
+/* ===== MARKERS ===== */
+.marker-container { position: relative; width: 28px; height: 28px; }
+.marker-core {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: var(--vz-primary); border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(215,38,56,.45), 0 0 0 4px rgba(255,183,3,.55);
+}
+.pulse-effect {
+  position: absolute; inset: -6px; border-radius: 50%;
+  background: radial-gradient(rgba(255,183,3,.9), transparent 70%);
+  animation: pulse 1.4s ease-out infinite; pointer-events:none;
+}
+@keyframes pulse { 0%{transform:scale(.6);opacity:.95} 70%{transform:scale(1.25);opacity:0} 100%{transform:scale(1.25);opacity:0} }
+
+/* ===== POPUPS (sem moldura branca) ===== */
+.leaflet-popup-content-wrapper.custom-popup,
+.leaflet-popup-tip.custom-popup { background: transparent !important; box-shadow: none !important; border: none !important; }
+.custom-popup .leaflet-popup-content { margin: 0 !important; }
+.custom-popup .leaflet-popup-content-wrapper { padding: 0 !important; }
+.custom-popup .leaflet-popup-tip { display: none !important; }
+
+/* ===== ROTA BRILHANTE ===== */
+.leaflet-overlay-pane .route-glow {
+  filter: drop-shadow(0 0 10px rgba(255,183,3,.75)) drop-shadow(0 0 6px rgba(215,38,56,.55));
+}
+.route-glow { stroke: url(#routeGradient); stroke-width: 10; opacity: .55; }
+.route-core { stroke: #d72638; stroke-width: 5; opacity: .9; }
+.route-dash { stroke: #ffb703; stroke-width: 2.5; opacity: .95; stroke-dasharray: 10 12; animation: dashMove 1.2s linear infinite; }
+@keyframes dashMove { to { stroke-dashoffset: -44; } }
+
+/* Mobile toque */
+@media (max-width: 640px){ .custom-popup button { min-width: 44px; min-height: 44px; } }

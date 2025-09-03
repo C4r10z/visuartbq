@@ -1,0 +1,17 @@
+@import "./styles/theme.css";
+@import "leaflet/dist/leaflet.css";
+@import "./styles/theme.css";
+@import "./components/Map.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root { height: 100%; }
+body { transition: background-color .2s ease, color .2s ease; }
+
+/* Scrollbar leve */
+* { scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
+*::-webkit-scrollbar { height: 10px; width: 10px; }
+*::-webkit-scrollbar-thumb { background:#cbd5e1; border-radius:999px; }
+*::-webkit-scrollbar-track { background: transparent; }
