@@ -222,5 +222,153 @@ section, header, footer {
 
 /* Utilitário: aplique quando tiver elementos com offset negativo (ex.: blobs) */
 .clip-x { overflow-x: clip; }
+/* From Uiverse.io by Madflows */ 
+:root{
+  /* tons calibrados: borda > fill > plano 3D */
+  /* RED */
+  --vz-red-border: #b81a27;   /* mais escuro/forte (borda) */
+  --vz-red-fill:   #d94b56;   /* mais claro (fundo do botão) */
+  --vz-red-plane:  #ef8c95;   /* plano 3D (::before) */
+
+  /* AMBER */
+  --vz-amber-border: #d39a02; /* mais escuro/forte (borda) */
+  --vz-amber-fill:   #f6c23a; /* mais claro (fundo do botão) */
+  --vz-amber-plane:  #ffdf86; /* plano 3D (::before) */
+}
+
+/* ===== base ===== */
+.learn-more{
+  position:relative;
+  display:inline-flex; align-items:center; justify-content:center;
+  cursor:pointer; outline:none; border:0; text-decoration:none;
+
+  font: 800 14px/1.1 inherit;
+  text-transform:uppercase;
+
+  padding:.9em 1.35em;
+  border-radius:.7em;
+
+  transform-style:preserve-3d;
+  transition:
+    transform 140ms cubic-bezier(.2,.8,.2,1),
+    background-color 140ms cubic-bezier(.2,.8,.2,1),
+    border-color 140ms cubic-bezier(.2,.8,.2,1),
+    box-shadow 140ms cubic-bezier(.2,.8,.2,1);
+}
+.learn-more::before{
+  content:''; position:absolute; inset:0; border-radius:inherit;
+  transform: translate3d(0, .55em, -1em);
+  transition:
+    transform 140ms cubic-bezier(.2,.8,.2,1),
+    box-shadow 140ms cubic-bezier(.2,.8,.2,1),
+    background-color 140ms cubic-bezier(.2,.8,.2,1);
+}
+
+/* ===== VERMELHO: borda > fill > plano ===== */
+.learn-more.is-red{
+  color:#fff;
+  background-color: var(--vz-red-fill);
+  border:2px solid var(--vz-red-border);     /* borda mais forte */
+}
+.learn-more.is-red::before{
+  background-color: var(--vz-red-plane);     /* plano mais claro que o fill */
+  box-shadow: 0 0 0 2px var(--vz-red-border), 0 .55em 0 0 #9f1621; /* sombra 3D consistente */
+}
+.learn-more.is-red:hover{
+  background-color: #cf424e;                 /* levemente mais escuro no hover */
+  border-color: var(--vz-red-border);
+  transform: translateY(.18em);
+}
+.learn-more.is-red:hover::before{
+  background-color:#e57a84;
+  transform: translate3d(0, .4em, -1em);
+  box-shadow: 0 0 0 2px var(--vz-red-border), 0 .4em 0 0 #9f1621;
+}
+.learn-more.is-red:active{ transform: translateY(.55em); }
+.learn-more.is-red:active::before{
+  transform: translate3d(0,0,-1em);
+  box-shadow: 0 0 0 2px var(--vz-red-border), 0 0 0 0 transparent;
+}
+
+/* ===== AMARELO: borda > fill > plano ===== */
+.learn-more.is-yellow{
+  color:#2a1f00;
+  background-color: var(--vz-amber-fill);
+  border:2px solid var(--vz-amber-border);   /* borda mais forte */
+}
+.learn-more.is-yellow::before{
+  background-color: var(--vz-amber-plane);   /* plano mais claro que o fill */
+  box-shadow: 0 0 0 2px var(--vz-amber-border), 0 .55em 0 0 #b78902;
+}
+.learn-more.is-yellow:hover{
+  background-color:#ecb730;                  /* leve escurecida no hover */
+  border-color: var(--vz-amber-border);
+  transform: translateY(.18em);
+}
+.learn-more.is-yellow:hover::before{
+  background-color:#ffd97a;
+  transform: translate3d(0, .4em, -1em);
+  box-shadow: 0 0 0 2px var(--vz-amber-border), 0 .4em 0 0 #b78902;
+}
+.learn-more.is-yellow:active{ transform: translateY(.55em); }
+.learn-more.is-yellow:active::before{
+  transform: translate3d(0,0,-1em);
+  box-shadow: 0 0 0 2px var(--vz-amber-border), 0 0 0 0 transparent;
+}
+
+/* Acessibilidade */
+.learn-more:focus-visible{
+  outline:3px solid rgba(0,0,0,.18);
+  outline-offset:2px;
+}
+
+/* ===== layout ===== */
+/* Mobile: lado a lado e do mesmo tamanho */
+@media (max-width:640px){
+  .hero-cta{ display:flex; gap:12px; flex-wrap:nowrap; }
+  .hero-cta .learn-more{
+    flex:1 1 0; min-width:0;
+    font-size:13px; padding:.85em 1.1em;
+  }
+}
+/* Desktop: mais estreitos (não 50/50) */
+@media (min-width:641px){
+  .hero-cta{ display:flex; gap:12px; }
+  .hero-cta .learn-more{
+    flex:0 0 auto;
+    min-width:150px;      /* ajuste a gosto: 140–180px */
+    max-width:220px;
+  }
+}
+/* ===== CTAs menores (override) ===== */
+.hero-cta { gap: 10px; }
+
+.learn-more{
+  font-size: 13px;           /* antes 14px */
+  padding: 0.78em 1.05em;    /* antes 0.9em 1.35em */
+  border-radius: 0.65em;     /* leve ajuste */
+}
+.learn-more::before{
+  transform: translate3d(0, 0.45em, -1em); /* profundidade um pouco menor */
+}
+
+/* Mobile (lado a lado e iguais, só um pouco menores) */
+@media (max-width: 640px){
+  .hero-cta{ flex-wrap: nowrap; }
+  .hero-cta .learn-more{
+    flex: 1 1 0;
+    font-size: 12.5px;
+    padding: 0.72em 0.95em;
+  }
+}
+
+/* Desktop (mais estreitos) */
+@media (min-width: 641px){
+  .hero-cta .learn-more{
+    flex: 0 0 auto;
+    min-width: 128px;   /* antes 150px */
+    max-width: 190px;   /* antes 220px */
+  }
+}
 
 

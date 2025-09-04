@@ -81,13 +81,22 @@ export default function Home() {
                 </span>
               </h1>
 
-              <div className="mt-5 flex gap-3">
-                <Btn href="#mapa" variant="primary" className="text-sm md:text-base">
+              <div className="mt-5 flex gap-3 hero-cta">
+                <a
+                  href="#mapa"
+                  className="learn-more is-red"
+                  aria-label="Ir para o mapa de outdoors"
+                >
                   Ver mapa
-                </Btn>
-                <Btn href="#servicos" variant="secondary" className="text-sm md:text-base">
+                </a>
+
+                <a
+                  href="#servicos"
+                  className="learn-more is-yellow"
+                  aria-label="Ir para a seção de serviços"
+                >
                   Nossos Serviços
-                </Btn>
+                </a>
               </div>
             </div>
 
@@ -135,14 +144,15 @@ export default function Home() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 items-center mb-10">
-            {/* ESQUERDA: Lottie */}
-            <BrandDotLottie
-              src="https://lottie.host/d78c974d-db3b-4d9a-8a90-96fcefa10fe8/4nPcO3JaMA.lottie"
-              ariaLabel="Aumente sua visibilidade com mídia exterior"
-              speed={1}
-              loop
-              autoplay
-            />
+          {/* ESQUERDA: Lottie */}
+          <BrandDotLottie
+            src="https://lottie.host/033ab36d-ee0d-49ed-a685-357341d6a966/o4TLzKPt7E.lottie"  // <- novo
+            ariaLabel="Aumente sua visibilidade com mídia exterior"
+            speed={1}
+            loop
+            autoplay
+          />
+
 
             {/* DIREITA: Texto de impacto */}
             <div>
