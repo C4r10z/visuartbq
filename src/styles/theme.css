@@ -14,21 +14,66 @@
 
   --header-h: 64px;
   --header-h-compact: 52px;
+
+  /* tons calibrados: borda > fill > plano 3D (para .learn-more) */
+  /* RED */
+  --vz-red-border: #b81a27;   /* mais escuro/forte (borda) */
+  --vz-red-fill:   #d94b56;   /* mais claro (fundo do botão) */
+  --vz-red-plane:  #ef8c95;   /* plano 3D */
+
+  /* AMBER */
+  --vz-amber-border: #d39a02; /* mais escuro/forte (borda) */
+  --vz-amber-fill:   #f6c23a; /* mais claro (fundo do botão) */
+  --vz-amber-plane:  #ffdf86; /* plano 3D */
 }
 
 /* ===== Base ===== */
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;             /* trava scroll lateral */
+}
+
+:root, html {
+  color-scheme: light;            /* força controles/scrollbars claros */
+  background: var(--vz-bg);
+  color: var(--vz-text);
+}
+@media (prefers-color-scheme: dark) {
+  :root, html, body {
+    color-scheme: light;
+    background: var(--vz-bg);
+    color: var(--vz-text);
+  }
+}
+
+/* Mídias nunca estouram o layout */
+img, svg, video, canvas, iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Clipa qualquer “vazamento” horizontal em seções grandes */
+section, header, footer { overflow-x: clip; }
+.clip-x { overflow-x: clip; }
+
 /* Dots + Blobs utilitárias */
-.vz-dots {
+.vz-dots{
   position: relative; width: 120px; height: 120px;
   background-image: radial-gradient(var(--vz-accent) 2.6px, transparent 2.6px);
   background-size: 12px 12px; opacity: .85;
 }
-.vz-blob { position: absolute; border-radius: 999px; filter: blur(18px); opacity: .7; pointer-events: none; }
+.vz-blob{ position: absolute; border-radius: 999px; filter: blur(18px); opacity: .7; pointer-events: none; }
 
-/* Hover */
+/* Hover utilities */
 .hover-boost { transition: transform .18s ease, box-shadow .18s ease, filter .18s ease; will-change: transform, box-shadow, filter; }
 .hover-boost:hover { transform: translateY(-2px); filter: saturate(1.06); }
 .hover-boost-red:hover { box-shadow: var(--vz-glow-red); }
@@ -41,12 +86,12 @@ html { scroll-behavior: smooth; }
 /* ===== Header ===== */
 .site-header { will-change: transform; }
 
-.header-shell {
+.header-shell{
   height: var(--header-h);
   transition: height .18s ease, box-shadow .18s ease, background-color .18s ease;
   box-shadow: 0 10px 20px rgba(15, 23, 42, 0.04);
 }
-.header-shell.compact {
+.header-shell.compact{
   height: var(--header-h-compact);
   box-shadow: 0 12px 22px rgba(15, 23, 42, 0.08);
 }
@@ -55,7 +100,7 @@ html { scroll-behavior: smooth; }
 .header-shell.compact .logo-shrink { transform: scale(.92); }
 
 /* Pills desktop */
-.nav-pill {
+.nav-pill{
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -69,14 +114,14 @@ html { scroll-behavior: smooth; }
   color: #111827;
   transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
 }
-.nav-pill:hover {
+.nav-pill:hover{
   transform: translateY(-1px);
   box-shadow: 0 10px 22px rgba(17,24,39,.08);
   background: linear-gradient(180deg, rgba(255,255,255,.75), rgba(248,250,252,.45));
 }
 
-/* CTA desktop (âmbar, igual aos CTAs do site) */
-.btn-cta {
+/* CTA do header (escopado) — evita conflito com botões da página */
+.site-header .btn-cta{
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -89,35 +134,13 @@ html { scroll-behavior: smooth; }
   box-shadow: 0 8px 22px rgba(255,183,3,.18);
   transition: transform .15s ease, box-shadow .15s ease;
 }
-.btn-cta:hover {
+.site-header .btn-cta:hover{
   transform: translateY(-1px);
   box-shadow: 0 14px 28px rgba(255,183,3,.28);
 }
 
-/* ===== Mobile menu ===== */
-@keyframes mobileDrop {
-  from { opacity: 0; transform: translateY(-8px) scaleY(.98); }
-  to   { opacity: 1; transform: translateY(0) scaleY(1); }
-}
-.animate-mobileDrop { animation: mobileDrop .26s cubic-bezier(.2,.8,.2,1); }
-
-.mobile-item {
-  display: block;
-  padding: .8rem .25rem;
-  margin: 0 .25rem;
-  font-weight: 700;
-  border-radius: 10px;
-  color: #111827;
-  transition: background .15s ease, transform .15s ease, box-shadow .15s ease;
-}
-.mobile-item:hover {
-  background: rgba(17,24,39,.05);
-  transform: translateY(-1px);
-  box-shadow: 0 10px 20px rgba(17,24,39,.06);
-}
-
-/* Botões da gaveta mobile */
-.mobile-ghost-btn {
+/* Botões da gaveta mobile (escopados) */
+.site-header .mobile-ghost-btn{
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -131,12 +154,12 @@ html { scroll-behavior: smooth; }
   box-shadow: 0 8px 18px rgba(17,24,39,.06);
   transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
 }
-.mobile-ghost-btn:hover {
+.site-header .mobile-ghost-btn:hover{
   transform: translateY(-1px);
   background: linear-gradient(180deg, rgba(255,255,255,.75), rgba(248,250,252,.45));
   box-shadow: 0 12px 24px rgba(17,24,39,.1);
 }
-.mobile-cta-btn {
+.site-header .mobile-cta-btn{
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -150,29 +173,29 @@ html { scroll-behavior: smooth; }
   box-shadow: 0 10px 22px rgba(255,183,3,.22);
   transition: transform .15s ease, box-shadow .15s ease;
 }
-.mobile-cta-btn:hover {
+.site-header .mobile-cta-btn:hover{
   transform: translateY(-1px);
   box-shadow: 0 16px 28px rgba(255,183,3,.3);
 }
 
-/* ===== Compact: encolher botões do header no desktop ===== */
-.header-shell.compact .nav-pill {
-  padding: .38rem .68rem;      /* antes .55 .9 */
-  font-size: .88rem;           /* antes .94rem */
-  border-radius: 10px;         /* antes 12px */
+/* Compact: encolher itens do header no desktop */
+.header-shell.compact .nav-pill{
+  padding: .38rem .68rem;
+  font-size: .88rem;
+  border-radius: 10px;
   transition: padding .18s ease, font-size .18s ease, border-radius .18s ease;
 }
-.header-shell.compact .btn-cta {
-  padding: .48rem .8rem;       /* antes .6 1.0 */
+.header-shell.compact .btn-cta{
+  padding: .48rem .8rem;
   font-size: .92rem;
-  border-radius: 12px;         /* antes 14px */
+  border-radius: 12px;
   box-shadow: 0 6px 16px rgba(255,183,3,.18);
   transition: padding .18s ease, font-size .18s ease, border-radius .18s ease, box-shadow .18s ease;
 }
 .header-shell.compact nav { gap: .5rem; }
 
-/* ===== Mobile: encolhimento e hambúrguer menor no compact ===== */
-@media (max-width: 639.98px) {
+/* Mobile: alturas e hambúrguer no compact */
+@media (max-width: 639.98px){
   .header-shell { height: var(--header-h); }
   .header-shell.compact { height: var(--header-h-compact); }
 
@@ -181,74 +204,22 @@ html { scroll-behavior: smooth; }
   .header-shell .hamb { width: 40px; height: 40px; border-radius: 12px; transition: all .18s ease; }
   .header-shell.compact .hamb { width: 36px; height: 36px; border-radius: 10px; }
 }
-/* ===== Forçar tema claro em tudo ===== */
-:root, html {
-  color-scheme: light;            /* força controles/scrollbars claros */
-  background: var(--vz-bg);
-  color: var(--vz-text);
-}
 
-/* Se o SO estiver em dark, ainda assim mantemos claro */
-@media (prefers-color-scheme: dark) {
-  :root, html, body {
-    color-scheme: light;
-    background: var(--vz-bg);
-    color: var(--vz-text);
-  }
-}
-
-/* ===== Bloquear scroll horizontal ===== */
-*,
-*::before,
-*::after { box-sizing: border-box; }
-
-html, body {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;             /* trava scroll lateral */
-}
-
-/* Mídias nunca estouram o layout */
-img, svg, video, canvas, iframe {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* Clipa qualquer “vazamento” horizontal em seções grandes */
-section, header, footer {
-  overflow-x: clip;               /* moderno, evita criar barra de rolagem */
-}
-
-/* Utilitário: aplique quando tiver elementos com offset negativo (ex.: blobs) */
-.clip-x { overflow-x: clip; }
-/* From Uiverse.io by Madflows */ 
-:root{
-  /* tons calibrados: borda > fill > plano 3D */
-  /* RED */
-  --vz-red-border: #b81a27;   /* mais escuro/forte (borda) */
-  --vz-red-fill:   #d94b56;   /* mais claro (fundo do botão) */
-  --vz-red-plane:  #ef8c95;   /* plano 3D (::before) */
-
-  /* AMBER */
-  --vz-amber-border: #d39a02; /* mais escuro/forte (borda) */
-  --vz-amber-fill:   #f6c23a; /* mais claro (fundo do botão) */
-  --vz-amber-plane:  #ffdf86; /* plano 3D (::before) */
-}
-
-/* ===== base ===== */
+/* ===== Botões novos .learn-more (3D, vermelho/amarelo) ===== */
 .learn-more{
-  position:relative;
-  display:inline-flex; align-items:center; justify-content:center;
-  cursor:pointer; outline:none; border:0; text-decoration:none;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer; outline: none; border: 0; text-decoration: none;
 
   font: 800 14px/1.1 inherit;
-  text-transform:uppercase;
+  text-transform: uppercase;
 
-  padding:.9em 1.35em;
-  border-radius:.7em;
+  padding: .9em 1.35em;
+  border-radius: .7em;
 
-  transform-style:preserve-3d;
+  transform-style: preserve-3d;
   transition:
     transform 140ms cubic-bezier(.2,.8,.2,1),
     background-color 140ms cubic-bezier(.2,.8,.2,1),
@@ -256,7 +227,9 @@ section, header, footer {
     box-shadow 140ms cubic-bezier(.2,.8,.2,1);
 }
 .learn-more::before{
-  content:''; position:absolute; inset:0; border-radius:inherit;
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: inherit;
   transform: translate3d(0, .55em, -1em);
   transition:
     transform 140ms cubic-bezier(.2,.8,.2,1),
@@ -264,23 +237,22 @@ section, header, footer {
     background-color 140ms cubic-bezier(.2,.8,.2,1);
 }
 
-/* ===== VERMELHO: borda > fill > plano ===== */
+/* VERMELHO: borda > fill > plano */
 .learn-more.is-red{
-  color:#fff;
+  color: #fff;
   background-color: var(--vz-red-fill);
-  border:2px solid var(--vz-red-border);     /* borda mais forte */
+  border: 2px solid var(--vz-red-border);
 }
 .learn-more.is-red::before{
-  background-color: var(--vz-red-plane);     /* plano mais claro que o fill */
-  box-shadow: 0 0 0 2px var(--vz-red-border), 0 .55em 0 0 #9f1621; /* sombra 3D consistente */
+  background-color: var(--vz-red-plane);
+  box-shadow: 0 0 0 2px var(--vz-red-border), 0 .55em 0 0 #9f1621;
 }
 .learn-more.is-red:hover{
-  background-color: #cf424e;                 /* levemente mais escuro no hover */
-  border-color: var(--vz-red-border);
+  background-color: #cf424e;   /* leve escurecida */
   transform: translateY(.18em);
 }
 .learn-more.is-red:hover::before{
-  background-color:#e57a84;
+  background-color: #e57a84;
   transform: translate3d(0, .4em, -1em);
   box-shadow: 0 0 0 2px var(--vz-red-border), 0 .4em 0 0 #9f1621;
 }
@@ -290,23 +262,22 @@ section, header, footer {
   box-shadow: 0 0 0 2px var(--vz-red-border), 0 0 0 0 transparent;
 }
 
-/* ===== AMARELO: borda > fill > plano ===== */
+/* AMARELO: borda > fill > plano */
 .learn-more.is-yellow{
-  color:#2a1f00;
+  color: #2a1f00;
   background-color: var(--vz-amber-fill);
-  border:2px solid var(--vz-amber-border);   /* borda mais forte */
+  border: 2px solid var(--vz-amber-border);
 }
 .learn-more.is-yellow::before{
-  background-color: var(--vz-amber-plane);   /* plano mais claro que o fill */
+  background-color: var(--vz-amber-plane);
   box-shadow: 0 0 0 2px var(--vz-amber-border), 0 .55em 0 0 #b78902;
 }
 .learn-more.is-yellow:hover{
-  background-color:#ecb730;                  /* leve escurecida no hover */
-  border-color: var(--vz-amber-border);
+  background-color: #ecb730;   /* leve escurecida */
   transform: translateY(.18em);
 }
 .learn-more.is-yellow:hover::before{
-  background-color:#ffd97a;
+  background-color: #ffd97a;
   transform: translate3d(0, .4em, -1em);
   box-shadow: 0 0 0 2px var(--vz-amber-border), 0 .4em 0 0 #b78902;
 }
@@ -318,57 +289,50 @@ section, header, footer {
 
 /* Acessibilidade */
 .learn-more:focus-visible{
-  outline:3px solid rgba(0,0,0,.18);
-  outline-offset:2px;
+  outline: 3px solid rgba(0,0,0,.18);
+  outline-offset: 2px;
 }
 
-/* ===== layout ===== */
-/* Mobile: lado a lado e do mesmo tamanho */
-@media (max-width:640px){
-  .hero-cta{ display:flex; gap:12px; flex-wrap:nowrap; }
-  .hero-cta .learn-more{
-    flex:1 1 0; min-width:0;
-    font-size:13px; padding:.85em 1.1em;
-  }
-}
-/* Desktop: mais estreitos (não 50/50) */
-@media (min-width:641px){
-  .hero-cta{ display:flex; gap:12px; }
-  .hero-cta .learn-more{
-    flex:0 0 auto;
-    min-width:150px;      /* ajuste a gosto: 140–180px */
-    max-width:220px;
-  }
-}
-/* ===== CTAs menores (override) ===== */
-.hero-cta { gap: 10px; }
+/* ===== Layout dos CTAs do hero ===== */
+.hero-cta { display: flex; gap: 10px; }
 
-.learn-more{
-  font-size: 13px;           /* antes 14px */
-  padding: 0.78em 1.05em;    /* antes 0.9em 1.35em */
-  border-radius: 0.65em;     /* leve ajuste */
-}
-.learn-more::before{
-  transform: translate3d(0, 0.45em, -1em); /* profundidade um pouco menor */
-}
-
-/* Mobile (lado a lado e iguais, só um pouco menores) */
 @media (max-width: 640px){
   .hero-cta{ flex-wrap: nowrap; }
   .hero-cta .learn-more{
-    flex: 1 1 0;
+    flex: 1 1 0; min-width: 0;
     font-size: 12.5px;
     padding: 0.72em 0.95em;
+    border-radius: 0.65em;
   }
+  .learn-more::before{ transform: translate3d(0, 0.45em, -1em); }
 }
 
-/* Desktop (mais estreitos) */
 @media (min-width: 641px){
   .hero-cta .learn-more{
     flex: 0 0 auto;
-    min-width: 128px;   /* antes 150px */
-    max-width: 190px;   /* antes 220px */
+    min-width: 128px;   /* antes 150px — CTAs mais estreitos no desktop */
+    max-width: 190px;
+    font-size: 13px;
+    padding: 0.78em 1.05em;
+    border-radius: 0.65em;
   }
+  .learn-more::before{ transform: translate3d(0, 0.45em, -1em); }
+}
+/* ===== Modificadores de tamanho para <Btn /> ===== */
+.learn-more.is-md{
+  font-size: 13px;
+  padding: 0.78em 1.05em;
+  border-radius: 0.65em;
+}
+.learn-more.is-md::before{
+  transform: translate3d(0, 0.45em, -1em);
 }
 
-
+.learn-more.is-sm{
+  font-size: 11.5px;
+  padding: 0.55em 0.8em;
+  border-radius: 0.6em;
+}
+.learn-more.is-sm::before{
+  transform: translate3d(0, 0.38em, -1em);
+}
