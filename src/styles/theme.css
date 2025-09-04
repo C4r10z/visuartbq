@@ -336,3 +336,18 @@ section, header, footer { overflow-x: clip; }
 .learn-more.is-sm::before{
   transform: translate3d(0, 0.38em, -1em);
 }
+/* ===== Cards: botões menores só na seção #servicos ===== */
+#servicos .learn-more.is-sm{
+  font-size: 10.5px;        /* antes ~11.5px */
+  padding: 0.5em 0.75em;    /* ligeiramente menor */
+  border-radius: 0.55em;
+}
+#servicos .learn-more.is-sm::before{
+  transform: translate3d(0, 0.34em, -1em); /* reduz a “altura” 3D */
+}
+
+/* garante que os dois botões do card fiquem iguais em largura */
+#servicos .grid.grid-cols-2 .learn-more.is-sm{
+  flex: 1 1 0;
+  min-width: 0;
+}
