@@ -351,3 +351,13 @@ section, header, footer { overflow-x: clip; }
   flex: 1 1 0;
   min-width: 0;
 }
+/* Header: botões menores */
+.site-header .learn-more{
+  font-size: 12px;         /* antes ~13–14px */
+  padding: 0.56em 0.90em;  /* mais compacto */
+  border-radius: 0.60em;
+}
+.header-shell.compact .learn-more{
+  font-size: 11.5px;
+  padding: 0.50em 0.82em;
+}

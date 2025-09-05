@@ -31,6 +31,53 @@ const downsample = (arr,max)=>{ if(arr.length<=max)return arr; const s=Math.ceil
 const MAP_BOUNDS = { southWest: [-21.25, -43.81], northEast: [-21.19, -43.73] };
 const fallbackLocation = [-21.224643, -43.772096];
 
+/** ---- Carrossel simples para o POPUP (auto-rotate) ---- */
+function AutoSwapImage({ images = [], alt = "", intervalMs = 2800, height = 150, radius = 8 }) {
+  const [idx, setIdx] = useState(0);
+
+  useEffect(() => {
+    if (!images || images.length <= 1) return;
+    // pré-carrega as seguintes
+    images.slice(1).forEach(src => { const i = new Image(); i.src = src; });
+    const id = setInterval(() => setIdx((p) => (p + 1) % images.length), intervalMs);
+    return () => clearInterval(id);
+  }, [images, intervalMs]);
+
+  if (!images || images.length === 0) {
+    return (
+      <div
+        style={{ width: "100%", height, borderRadius: radius }}
+        className="grid place-items-center text-sm text-vz-muted"
+      >
+        Sem imagem
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className="relative overflow-hidden"
+      style={{ width: "100%", height, borderRadius: radius }}
+      onClick={(e) => e.stopPropagation()} // evita fechar o popup
+    >
+      {images.map((src, i) => (
+        <img
+          key={i}
+          src={src}
+          alt={alt}
+          aria-hidden={i !== idx}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+            i === idx ? "opacity-100" : "opacity-0"
+          }`}
+          loading={i === 0 ? "lazy" : "eager"}
+          decoding="async"
+          draggable="false"
+        />
+      ))}
+    </div>
+  );
+}
+
 export default function MapView({ className = "", height = undefined }) {
   const [expanded, setExpanded] = useState(false);
   const [userLocation, setUserLocation] = useState(null);
@@ -158,14 +205,8 @@ export default function MapView({ className = "", height = undefined }) {
                     >×</button>
                   </div>
 
-                  {Array.isArray(o.images) && o.images[0] && (
-                    <img
-                      src={o.images[0]} alt={o.name}
-                      style={{ width:"100%", height: 150, objectFit:"cover", borderRadius: 8, marginBottom: 8 }}
-                      loading="lazy"
-                      onClick={(e)=>e.stopPropagation()}
-                    />
-                  )}
+                  {/* === CARROSSEL AUTO (troca sozinho) === */}
+                  <AutoSwapImage images={o.images} alt={o.name} intervalMs={2800} height={150} radius={8} />
 
                   <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"6px 0", borderTop:"1px solid #f3f4f6", borderBottom:"1px solid #f3f4f6" }}>
                     <span style={{ color:"#6b7280", fontSize: 13 }}>{o.address || "—"}</span>
@@ -221,11 +262,9 @@ export default function MapView({ className = "", height = undefined }) {
         <div
           className="halo-layer pointer-events-none absolute"
           style={{
-            /* Faz o halo “abraçar” o cartão */
             inset: "-36px",
             zIndex: 0,
             overflow: "visible",
-            /* 3 camadas: âmbar topo/dir, carmim baixo/esq, faixa diagonal */
             background:
               "radial-gradient(240px 180px at 100% 0%, rgba(255,183,3,.50), transparent 72%)," +
               "radial-gradient(220px 180px at 0% 100%, rgba(215,38,56,.40), transparent 72%)," +

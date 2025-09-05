@@ -1,0 +1,15 @@
+{
+  "name": "visuart-bot",
+  "version": "1.0.0",
+  "description": "Visuart WhatsApp bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "private": true,
+  "dependencies": {
+    "moment-timezone": "^0.6.0",
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.33.2"
+  }
+}

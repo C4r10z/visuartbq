@@ -9,6 +9,13 @@ import { initReveal } from "../lib/reveal";
 import BrandDotLottie from "../components/BrandDotLottie";
 import Btn from "../components/Btn";
 
+/* ========= WHATSAPP =========
+   Coloque aqui o MESMO número do seu bot/atendente (apenas dígitos, com 55)
+   Ex.: 55 32 99999-9999  => "5532999999999"
+*/
+const WAPP = "5532984685261";
+const waLink = (text) => `https://wa.me/${WAPP}?text=${encodeURIComponent(text)}`;
+
 /* ---- dispara o initReveal sem hooks, de forma segura ---- */
 (function initRevealOnLoad() {
   if (typeof window === "undefined") return;
@@ -44,7 +51,6 @@ function Section({ id, children, className = "" }) {
   );
 }
 
-
 export default function Home() {
   // dados dos serviços (inline)
   const services = [
@@ -56,11 +62,10 @@ export default function Home() {
     { key: "sinalizacao", title: "Sinalização Interna",   emoji: "🅿️", blurb: "Fluxo orientado com estilo e clareza." },
   ];
 
+  // abrir WhatsApp com mensagem padronizada (mantido para os cards)
   const openWA = (serviceKey = "") => {
-    const msg = encodeURIComponent(
-      `Olá! Tenho interesse no serviço: ${serviceKey.toUpperCase()}. Pode me enviar mais informações?`
-    );
-    window.open(`https://wa.me/5532999831313?text=${msg}`, "_blank", "noopener,noreferrer");
+    const msg = `Olá! Vim do site e tenho interesse no serviço: ${serviceKey.toUpperCase()}. Pode me enviar mais informações?`;
+    window.open(waLink(msg), "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -81,19 +86,22 @@ export default function Home() {
                 </span>
               </h1>
 
+              {/* Hero CTAs agora vão para o WhatsApp */}
               <div className="mt-5 flex gap-3 hero-cta">
                 <a
-                  href="#mapa"
+                  href={waLink("Olá! Vim do site (CTA: Ver mapa). Pode me ajudar?")}
                   className="learn-more is-red"
-                  aria-label="Ir para o mapa de outdoors"
+                  aria-label="Falar no WhatsApp sobre o mapa de outdoors"
+                  target="_blank" rel="noopener noreferrer"
                 >
                   Ver mapa
                 </a>
 
                 <a
-                  href="#servicos"
+                  href={waLink("Olá! Vim do site (CTA: Nossos Serviços). Pode me ajudar?")}
                   className="learn-more is-yellow"
-                  aria-label="Ir para a seção de serviços"
+                  aria-label="Falar no WhatsApp sobre os serviços"
+                  target="_blank" rel="noopener noreferrer"
                 >
                   Nossos Serviços
                 </a>
@@ -144,15 +152,14 @@ export default function Home() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 items-center mb-10">
-          {/* ESQUERDA: Lottie */}
-          <BrandDotLottie
-            src="https://lottie.host/033ab36d-ee0d-49ed-a685-357341d6a966/o4TLzKPt7E.lottie"  // <- novo
-            ariaLabel="Aumente sua visibilidade com mídia exterior"
-            speed={1}
-            loop
-            autoplay
-          />
-
+            {/* ESQUERDA: Lottie (nova) */}
+            <BrandDotLottie
+              src="https://lottie.host/033ab36d-ee0d-49ed-a685-357341d6a966/o4TLzKPt7E.lottie"
+              ariaLabel="Aumente sua visibilidade com mídia exterior"
+              speed={1}
+              loop
+              autoplay
+            />
 
             {/* DIREITA: Texto de impacto */}
             <div>
@@ -194,29 +201,36 @@ export default function Home() {
                     {s.blurb}
                   </p>
 
-                {/* botões do card de serviço */}
+                  {/* botões do card de serviço */}
                   <div className="mt-3 grid grid-cols-2 gap-2">
+                    {/* ORÇAMENTO → mensagem especial com palavra orçamento + serviço */}
                     <Btn
                       size="sm"
-                      variant="secondary"                 // âmbar (Whats/lead)
+                      variant="secondary"
                       className="w-full text-nowrap"
-                      onClick={() => openWA(s.key)}
+                      href={waLink(`Quero orçamento do serviço: ${s.title}`)}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       aria-label={`Pedir orçamento: ${s.title}`}
                       title="Pedir orçamento"
                     >
                       Orçamento
                     </Btn>
 
+                    {/* DETALHES → dispara fluxo de detalhes + exemplos + pergunta de orçamento */}
                     <Btn
                       size="sm"
-                      variant="primary"                   // vermelho
-                      href="#contato"
+                      variant="primary"
+                      href={waLink(`Quero detalhes sobre ${s.title}`)}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="w-full text-nowrap"
                       title="Detalhes do serviço"
                     >
                       Detalhes
                     </Btn>
                   </div>
+
                 </div>
                 <div
                   className="absolute left-0 bottom-0 h-[3px] w-0 group-hover:w-full transition-all duration-300"
@@ -232,6 +246,7 @@ export default function Home() {
       <Section id="mapa" className="pt-2 md:pt-6">
         <div className="mb-4 md:mb-6 flex items-center justify-between">
           <h3 className="text-lg md:text-2xl font-extrabold">Mapa de Outdoors</h3>
+          {/* se preferir que "Ver lista" também abra o WhatsApp, troque href abaixo pelo waLink(...) */}
           <Btn href="#lista-outdoors" variant="secondary" className="text-sm md:text-base">
             Ver lista
           </Btn>
@@ -245,7 +260,6 @@ export default function Home() {
           <h4 className="text-base md:text-xl font-extrabold mb-3 md:mb-4">
             Lista de Outdoors
           </h4>
-          {/* Se tiver botões aqui, reaproveite <Btn /> também */}
           <OutdoorList />
         </div>
       </Section>
